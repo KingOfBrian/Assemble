@@ -15,7 +15,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        var computr = Computr()
+
+        var ONE: Int = 1
+        var TEN: Int = 10
+
+        var addInstructions: [Computr.Instruction] = [
+            .init(op: .move, from: &TEN, to: &computr.eax),
+            .init(op: .add, from: &ONE, to: &computr.eax),
+            .init(op: .move, from: &computr.eax, to: computr.addr(at: 0)),
+        ]
+        computr.ic = addInstructions.withUnsafeMutableBufferPointer { buffer in
+            let address = buffer.baseAddress?.withMemoryRebound(to: Computr.Integer.self, capacity: addInstructions.capacity) { $0 }
+            return address!
+        }
+//        computr.execute(count: 3)
+        for i in addInstructions {
+            i.execute()
+        }
         return true
     }
 

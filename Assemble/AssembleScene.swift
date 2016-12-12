@@ -133,7 +133,6 @@ class RegisterNode: SCNNode, Layoutable {
         ]
         registerTextNode.geometry = SCNText.register(with: registerName)
         registerTextNode.position = .init(-1, -1, 1)
-//        let (min, max) = registerTextNode.boundingBox
 
         geometry = box
         scale = .init(0.8, 0.8, 0.8)
@@ -142,16 +141,19 @@ class RegisterNode: SCNNode, Layoutable {
 }
 
 class InstructionNode: SCNNode {
-    var configuration: Instruction!
+    let instructionName: String
 
-    override init() {
+    init(instructionName: String) {
+        self.instructionName = instructionName
         super.init()
     }
     required init?(coder aDecoder: NSCoder) { fatalError("") }
 }
 
 class InstructionListNode: SCNNode {
-    let instructions: [Instruction] = []
     let index: Int = 0
+
+    func addInstruction(name: String) {
+    }
 }
 
